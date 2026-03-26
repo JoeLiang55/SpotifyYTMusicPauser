@@ -17,6 +17,12 @@ class ToggleResult:
     session_sources: List[str]
 
 
+@dataclass
+class SkipResult:
+    affected_sessions: int
+    session_sources: List[str]
+
+
 class MediaController:
     async def _get_sessions(self):
         session_manager = await MediaManager.request_async()
@@ -60,3 +66,25 @@ class MediaController:
 
     def toggle_all(self) -> ToggleResult:
         return asyncio.run(self.toggle_all_async())
+
+    async def skip_next_async(self) -> SkipResult:
+        sessions = await self._get_sessions()
+
+        affected = 0
+        sources: List[str] = []
+
+        for session in sessions:
+            source_id = session.source_app_user_model_id
+            playback_info = session.get_playback_info()
+            controls = playback_info.controls if playback_info else None
+
+            if controls and controls.is_next_enabled:
+                ok = await session.try_skip_next_async()
+                if ok:
+                    affected += 1
+                    sources.append(source_id)
+
+        return SkipResult(affected_sessions=affected, session_sources=sources)
+
+    def skip_next(self) -> SkipResult:
+        return asyncio.run(self.skip_next_async())

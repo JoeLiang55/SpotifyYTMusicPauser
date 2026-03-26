@@ -1,13 +1,14 @@
 # Music Hotkey Controller (Windows)
 
-Background utility that lets you toggle media playback globally (Spotify + YouTube Music web sessions + other Windows media sessions) with a single configurable hotkey.
+Background utility that lets you control media playback globally (Spotify + YouTube Music web sessions + other Windows media sessions) with configurable global hotkeys.
 
-Default hotkey: `F6`
+Default hotkeys: `F6` (play/pause), `F7` (next track)
 
 ## Features
 
 - Global hotkey works while another window is focused (including games)
 - Toggles all active media sessions together (pause when anything is playing, otherwise play)
+- Skips to the next track globally from supported media sessions
 - System tray app with a simple hotkey editor
 - Config persisted in `config.json`
 
@@ -33,7 +34,8 @@ python main.py
 When running, use the tray icon to:
 
 - Toggle media immediately
-- Change the hotkey
+- Skip to next track immediately
+- Change hotkeys (play/pause and next track)
 - Exit the app
 
 ## Build EXE

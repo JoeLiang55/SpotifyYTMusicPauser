@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict
 
 
-DEFAULT_CONFIG = {"hotkey": "f6"}
+DEFAULT_CONFIG = {"hotkey": "f6", "next_track_hotkey": "f7"}
 
 
 class ConfigManager:
@@ -22,7 +22,14 @@ class ConfigManager:
             return DEFAULT_CONFIG.copy()
 
         hotkey = data.get("hotkey", DEFAULT_CONFIG["hotkey"])
-        return {"hotkey": str(hotkey).lower()}
+        next_track_hotkey = data.get(
+            "next_track_hotkey",
+            DEFAULT_CONFIG["next_track_hotkey"],
+        )
+        return {
+            "hotkey": str(hotkey).lower(),
+            "next_track_hotkey": str(next_track_hotkey).lower(),
+        }
 
     def save(self, config: Dict[str, str]) -> None:
         self.config_path.write_text(
@@ -33,5 +40,11 @@ class ConfigManager:
     def update_hotkey(self, hotkey: str) -> Dict[str, str]:
         config = self.load()
         config["hotkey"] = hotkey.lower().strip()
+        self.save(config)
+        return config
+
+    def update_next_track_hotkey(self, hotkey: str) -> Dict[str, str]:
+        config = self.load()
+        config["next_track_hotkey"] = hotkey.lower().strip()
         self.save(config)
         return config
