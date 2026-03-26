@@ -48,3 +48,4 @@ The executable is created in `dist\MusicHotkeyController.exe`.
 
 - Global hotkey libraries can require elevated privileges in some environments.
 - This app controls Windows media sessions exposed through SMTC, so behavior depends on whether the target app/session is registered with Windows media controls.
+- https://www.reddit.com/r/YoutubeMusic/comments/1s3vu4o/yt_music_pauser/
